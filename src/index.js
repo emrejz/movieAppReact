@@ -8,6 +8,7 @@ import logger from "redux-logger";
 import thunk from "redux-thunk";
 import promise from "redux-promise-middleware";
 import { rootReducer } from "./reducers/rootReducer";
+import "font-awesome/css/font-awesome.min.css";
 
 const all = compose(
   applyMiddleware(promise, thunk, logger),
