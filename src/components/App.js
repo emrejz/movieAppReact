@@ -3,6 +3,7 @@ import "../stylesheets/App.css";
 import { useSelector, useDispatch } from "react-redux";
 import { getMovies } from "../actions/movieActions";
 import { Header } from "../components/Header";
+import Home from "../pages/Home";
 
 function App() {
   const store = useSelector(state => state);
@@ -12,6 +13,7 @@ function App() {
   return (
     <div className="App">
       <Header />
+      <Home />
 
       <button onClick={() => dispatch(getMovies())}>asddas</button>
     </div>

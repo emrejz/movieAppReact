@@ -171,7 +171,7 @@ export const Header = () => {
 
   return (
     <div className={classes.grow}>
-      <AppBar className={classes.AppBar} position="static">
+      <AppBar className={classes.AppBar} position="fixed">
         <Toolbar>
           <Button className={classes.button} onClick={handleProfileMenuOpen}>
             <Typography className={classes.title} variant="h6" wrap>
