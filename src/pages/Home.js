@@ -18,6 +18,7 @@ const useStyles = makeStyles(theme => ({
 const Home = () => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [open1, setOpen1] = React.useState(false);
 
   return (
     <div className={classes.heroContent}>
@@ -37,7 +38,11 @@ const Home = () => {
         <div className={classes.heroButtons}>
           <Grid container spacing={2} justify="center">
             <Grid item>
-              <Button variant="contained" color="primary">
+              <Button
+                onClick={() => setOpen1(true)}
+                variant="contained"
+                color="primary"
+              >
                 SIGN IN
               </Button>
             </Grid>
@@ -49,7 +54,12 @@ const Home = () => {
               >
                 SIGN UP
               </Button>
-              <SlideDiaglog open={open} setOpen={setOpen} />
+              <SlideDiaglog
+                open={open}
+                setOpen={setOpen}
+                open1={open1}
+                setOpen1={setOpen1}
+              />
             </Grid>
           </Grid>
         </div>

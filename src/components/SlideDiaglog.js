@@ -3,14 +3,17 @@ import Dialog from "@material-ui/core/Dialog";
 
 import Slide from "@material-ui/core/Slide";
 import SignUp from "./SignUp";
+import SignIn from "./SignIn";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-const SlideDialog = ({ open, setOpen }) => {
+const SlideDialog = ({ open, open1, setOpen, setOpen1 }) => {
   function handleClose() {
     setOpen(false);
+    setOpen1(false);
   }
+
   return (
     <div>
       <Dialog
@@ -22,6 +25,16 @@ const SlideDialog = ({ open, setOpen }) => {
         aria-describedby="alert-dialog-slide-description"
       >
         <SignUp />
+      </Dialog>
+      <Dialog
+        open={open1}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-slide-title"
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <SignIn />
       </Dialog>
     </div>
   );
