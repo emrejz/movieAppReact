@@ -17,6 +17,8 @@ const useStyles = makeStyles(theme => ({
 
 const Home = () => {
   const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+
   return (
     <div className={classes.heroContent}>
       <Container maxWidth="sm">
@@ -41,12 +43,13 @@ const Home = () => {
             </Grid>
             <Grid item>
               <Button
-                onClick={() => <SlideDiaglog />}
+                onClick={() => setOpen(true)}
                 variant="outlined"
                 color="primary"
               >
                 SIGN UP
               </Button>
+              <SlideDiaglog open={open} setOpen={setOpen} />
             </Grid>
           </Grid>
         </div>
