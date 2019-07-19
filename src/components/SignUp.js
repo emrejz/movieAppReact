@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -9,6 +9,8 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { useSelector, useDispatch } from "react-redux";
+import { signUpFunc } from "../actions/authActions";
 
 const useStyles = makeStyles(theme => ({
   "@global": {
@@ -35,9 +37,31 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const SignUp = () => {
+const SignUp = ({ setOpen }) => {
+  const [getUsername, setUsername] = useState("");
+  const [getPassword, setPassword] = useState("");
+  const [getPasswordC, setPasswordC] = useState("");
+  const store = useSelector(state => state.registerReducer);
+  const dispatch = useDispatch();
   const classes = useStyles();
-
+  const isValid = () =>
+    !getUsername ||
+    !getPassword ||
+    !getPasswordC ||
+    getPassword !== getPasswordC;
+  const handleSubmit = e => {
+    e.preventDefault();
+    if (!isValid()) {
+      dispatch(signUpFunc(getUsername, getPassword)).then(res => {
+        if (res.value) {
+          setOpen(false);
+          setUsername("");
+          setPassword("");
+          setPasswordC("");
+        }
+      });
+    }
+  };
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -48,8 +72,21 @@ const SignUp = () => {
         <Typography component="h1" variant="h5">
           Sign Up
         </Typography>
-        <form className={classes.form} noValidate>
+        {Object.keys(store.errors).length !== 0 ? (
+          <Typography color="error" component="h1" variant="h6">
+            Username already exists!
+          </Typography>
+        ) : (
+          ""
+        )}
+        <form
+          onSubmit={e => handleSubmit(e)}
+          className={classes.form}
+          noValidate
+        >
           <TextField
+            onChange={e => setUsername(e.target.value.trim())}
+            value={getUsername}
             variant="outlined"
             margin="normal"
             required
@@ -61,6 +98,8 @@ const SignUp = () => {
             autoFocus
           />
           <TextField
+            onChange={e => setPassword(e.target.value.trim())}
+            value={getPassword}
             variant="outlined"
             margin="normal"
             required
@@ -72,13 +111,15 @@ const SignUp = () => {
             autoComplete="current-password"
           />
           <TextField
+            onChange={e => setPasswordC(e.target.value.trim())}
+            value={getPasswordC}
             variant="outlined"
             margin="normal"
             required
             fullWidth
             name="passwordC"
             label="Password"
-            type="passwordC"
+            type="password"
             id="passwordC"
             autoComplete="current-password"
           />
@@ -87,6 +128,7 @@ const SignUp = () => {
             label="Remember me"
           />
           <Button
+            disabled={store.fetching || isValid()}
             type="submit"
             fullWidth
             variant="contained"

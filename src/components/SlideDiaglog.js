@@ -24,7 +24,7 @@ const SlideDialog = ({ open, open1, setOpen, setOpen1 }) => {
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
-        <SignUp />
+        <SignUp setOpen={setOpen} />
       </Dialog>
       <Dialog
         open={open1}
@@ -34,7 +34,7 @@ const SlideDialog = ({ open, open1, setOpen, setOpen1 }) => {
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
-        <SignIn />
+        <SignIn setOpen={setOpen} setOpen1={setOpen1} />
       </Dialog>
     </div>
   );

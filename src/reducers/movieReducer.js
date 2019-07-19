@@ -1,12 +1,12 @@
 import {
   GET_MOVIES_PENDING,
-  GET_MOVIES_FULLFIELED,
+  GET_MOVIES_FULFILLED,
   GET_MOVIES_REJECTED
 } from "../actions/movieActions";
 const initState = {
   fetching: false,
   fetched: false,
-  movies: [],
+  moviesData: {},
   errors: {}
 };
 export const movieReducer = (state = initState, { type, payload }) => {
@@ -16,12 +16,12 @@ export const movieReducer = (state = initState, { type, payload }) => {
         ...state,
         fetching: true
       };
-    case GET_MOVIES_FULLFIELED:
+    case GET_MOVIES_FULFILLED:
       return {
         ...state,
         fetching: false,
         fetched: true,
-        movies: payload
+        moviesData: payload
       };
     case GET_MOVIES_REJECTED:
       return {

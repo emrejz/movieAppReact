@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -7,11 +7,12 @@ import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import LockOpen from "@material-ui/icons/LockOpen";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { useSelector, useDispatch } from "react-redux";
+import { signInFunc } from "../actions/authActions";
 
 const useStyles = makeStyles(theme => ({
   "@global": {
@@ -39,9 +40,23 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const SignIn = () => {
+const SignIn = ({ setOpen, setOpen1 }) => {
+  const [getUsername, setUsername] = useState("");
+  const [getPassword, setPassword] = useState("");
+  const store = useSelector(state => state.authReducer);
+  const dispatch = useDispatch();
   const classes = useStyles();
-
+  const handleSubmit = e => {
+    e.preventDefault();
+    dispatch(signInFunc(getUsername, getPassword)).then(res => {
+      if (res.value.status) {
+        localStorage.setItem("token", res.value.token);
+        setOpen1(false);
+        setUsername("");
+        setPassword("");
+      }
+    });
+  };
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -52,27 +67,42 @@ const SignIn = () => {
         <Typography component="h1" variant="h5">
           Sign In
         </Typography>
-        <form className={classes.form} noValidate>
+        {store.tokenData && !store.tokenData.status ? (
+          <Typography color="error" component="h1" variant="h6">
+            {store.tokenData.message}
+          </Typography>
+        ) : (
+          ""
+        )}
+        <form
+          onSubmit={e => handleSubmit(e)}
+          className={classes.form}
+          noValidate
+        >
           <TextField
+            onChange={e => setUsername(e.target.value.trim())}
+            value={getUsername}
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            id="username"
+            id="username2"
             label="Username"
-            name="username"
+            name="username2"
             autoComplete="username"
             autoFocus
           />
           <TextField
+            onChange={e => setPassword(e.target.value.trim())}
+            value={getPassword}
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            name="password"
+            name="password2"
             label="Password"
             type="password"
-            id="password"
+            id="password2"
             autoComplete="current-password"
           />
 
@@ -81,13 +111,14 @@ const SignIn = () => {
             label="Remember me"
           />
           <Button
+            disabled={store.fetching}
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
           >
-            SIGN IN
+            {store.fetching ? "Loading..." : "SIGN IN"}
           </Button>
           <Grid container>
             <Grid item xs>
@@ -96,7 +127,14 @@ const SignIn = () => {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link
+                href="#"
+                onClick={() => {
+                  setOpen1(false);
+                  setOpen(true);
+                }}
+                variant="body2"
+              >
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>

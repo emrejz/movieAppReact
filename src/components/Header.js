@@ -174,7 +174,7 @@ export const Header = () => {
       <AppBar className={classes.AppBar} position="fixed">
         <Toolbar>
           <Button className={classes.button} onClick={handleProfileMenuOpen}>
-            <Typography className={classes.title} variant="h6" wrap>
+            <Typography className={classes.title} variant="h6">
               PAGES
             </Typography>
           </Button>
