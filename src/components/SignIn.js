@@ -17,7 +17,7 @@ import { signInFunc } from "../actions/authActions";
 const useStyles = makeStyles(theme => ({
   "@global": {
     body: {
-      backgroundColor: "#0E0D0A !important"
+      backgroundColor: "white !important"
     }
   },
   paper: {
@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: "black !important"
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -38,13 +38,6 @@ const useStyles = makeStyles(theme => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2)
-  },
-  container: {
-    backgroundColor: "#4E4B4B !important",
-    color: "white"
-  },
-  inputClass: {
-    color: "white !important"
   }
 }));
 
@@ -54,19 +47,22 @@ const SignIn = ({ setOpen, setOpen1 }) => {
   const store = useSelector(state => state.authReducer);
   const dispatch = useDispatch();
   const classes = useStyles();
+  const isValid = () => !getUsername || !getPassword;
+
   const handleSubmit = e => {
     e.preventDefault();
-    dispatch(signInFunc(getUsername, getPassword)).then(res => {
-      if (res.value.status) {
-        localStorage.setItem("token", res.value.token);
-        setOpen1(false);
-        setUsername("");
-        setPassword("");
-      }
-    });
+    if (!isValid())
+      dispatch(signInFunc(getUsername, getPassword)).then(res => {
+        if (res.value.status) {
+          localStorage.setItem("token", res.value.token);
+          setOpen1(false);
+          setUsername("");
+          setPassword("");
+        }
+      });
   };
   return (
-    <Container className={classes.container} component="main" maxWidth="xs">
+    <Container className={"container"} component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -115,21 +111,12 @@ const SignIn = ({ setOpen, setOpen1 }) => {
             autoComplete="current-password"
           />
 
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            disabled={store.fetching}
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            {store.fetching ? "Loading..." : "SIGN IN"}
-          </Button>
-          <Grid container>
+          <button className="btn1 btnDeneme">
+            <div className="left" />
+            SIGN IN!
+            <div className="right" />
+          </button>
+          <Grid container style={{ marginTop: "30px" }}>
             <Grid item xs>
               <Link href="#" variant="body2">
                 Forgot password?

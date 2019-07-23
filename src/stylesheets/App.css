@@ -1,13 +1,15 @@
 .active {
   color: darkgoldenrod !important;
 }
-
+.MuiMenu-paper {
+  background-color: rgba(222, 227, 230, 1) !important;
+}
 .MuiMenu-paper a {
   text-decoration: none !important;
   color: #0e0d0a;
 }
 .MuiButtonBase-root {
-  font-size: calc(14px + 0.5vw) !important;
+  font-size: calc(12px + 0.5vw) !important;
   border-radius: 0% !important;
   border: 0px !important;
   box-sizing: border-box !important;
@@ -66,7 +68,158 @@
   opacity: 0 !important;
   transition: all 1s ease !important;
 }
-
 .AppBar:hover:before {
   opacity: 1 !important;
+}
+.container {
+  background-color: rgba(222, 227, 230, 1) !important;
+  color: black !important;
+  height: 450px !important;
+}
+.signButton {
+  width: 30px !important;
+  background: #c0069c !important;
+}
+:root {
+  --text-color: hsla(210, 50%, 85%, 1);
+  --shadow-color: hsla(210, 40%, 52%, 0.4);
+  --btn-color: hsl(210, 80%, 42%);
+  --bg-color: #141218;
+}
+
+* {
+  box-sizing: border-box;
+}
+.btn1 {
+  --content: "SIGN IN!";
+  margin-left: 26%;
+  margin-top: 12px;
+}
+.btn2 {
+  --content: "SIGN UP!";
+  margin-left: 26%;
+  margin-top: 12px;
+}
+.btnDeneme {
+  margin-top: "20px";
+  position: relative;
+  padding: 10px 20px;
+  border: none;
+  background: none;
+  cursor: pointer;
+
+  font-family: "Source Code Pro";
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 30px;
+  color: var(--text-color);
+
+  background-color: var(--btn-color);
+  box-shadow: var(--shadow-color) 2px 2px 22px;
+  border-radius: 4px;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.btnDeneme:focus {
+  outline-color: transparent;
+  box-shadow: var(--btn-color) 2px 2px 22px;
+}
+
+.right::after,
+.btnDeneme::after {
+  content: var(--content);
+  display: block;
+  position: absolute;
+  white-space: nowrap;
+  padding: 40px 40px;
+  pointer-events: none;
+}
+
+.btnDeneme::after {
+  font-weight: 200;
+  top: -30px;
+  left: -20px;
+}
+
+.right,
+.left {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+}
+.right {
+  left: 66%;
+}
+.left {
+  right: 66%;
+}
+.right::after {
+  top: -30px;
+  left: calc(-66% - 20px);
+
+  background-color: var(--bg-color);
+  color: transparent;
+  transition: transform 0.4s ease-out;
+  transform: translate(0, -90%) rotate(0deg);
+}
+
+.btnDeneme:hover .right::after {
+  transform: translate(0, -47%) rotate(0deg);
+}
+
+.btnDeneme .right:hover::after {
+  transform: translate(0, -50%) rotate(-7deg);
+}
+
+.btnDeneme .left:hover ~ .right::after {
+  transform: translate(0, -50%) rotate(7deg);
+}
+
+/* bubbles */
+.btnDeneme::before {
+  content: "";
+  pointer-events: none;
+  opacity: 0.6;
+  background: radial-gradient(
+      circle at 20% 35%,
+      transparent 0,
+      transparent 2px,
+      var(--text-color) 3px,
+      var(--text-color) 4px,
+      transparent 4px
+    ),
+    radial-gradient(
+      circle at 75% 44%,
+      transparent 0,
+      transparent 2px,
+      var(--text-color) 3px,
+      var(--text-color) 4px,
+      transparent 4px
+    ),
+    radial-gradient(
+      circle at 46% 52%,
+      transparent 0,
+      transparent 4px,
+      var(--text-color) 5px,
+      var(--text-color) 6px,
+      transparent 6px
+    );
+
+  width: 100%;
+  height: 300%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  animation: bubbles 5s linear infinite both;
+}
+
+@keyframes bubbles {
+  from {
+    transform: translate();
+  }
+  to {
+    transform: translate(0, -66.666%);
+  }
 }

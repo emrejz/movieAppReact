@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: "black"
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -63,7 +63,7 @@ const SignUp = ({ setOpen }) => {
     }
   };
   return (
-    <Container component="main" maxWidth="xs">
+    <Container className={"container"} component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -123,20 +123,12 @@ const SignUp = ({ setOpen }) => {
             id="passwordC"
             autoComplete="current-password"
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            disabled={store.fetching || isValid()}
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            SIGN UP
-          </Button>
+
+          <button className="btn2 btnDeneme">
+            <div className="left" />
+            SIGN UP!
+            <div className="right" />
+          </button>
         </form>
       </div>
     </Container>

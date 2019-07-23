@@ -234,6 +234,7 @@ export const Header = () => {
           </div>
           <div className={classes.sectionMobile}>
             <IconButton
+              style={{ marginBottom: "3px" }}
               aria-label="Show more"
               aria-controls={mobileMenuId}
               aria-haspopup="true"
