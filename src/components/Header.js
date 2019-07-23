@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, Fragment } from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
@@ -10,20 +10,19 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import MoreIcon from "@material-ui/icons/MoreVert";
+import SlideDiaglog from "./SlideDiaglog";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { NavLink } from "react-router-dom";
 import {
   faSignInAlt,
   faSignOutAlt,
   faUserPlus
 } from "@fortawesome/free-solid-svg-icons";
-
 const useStyles = makeStyles(theme => ({
   grow: {
     flexGrow: 1
   },
-  AppBar: {
-    background: "linear-gradient(to right, #4da0b0, #d39d38) !important"
-  },
+
   menuButton: {
     marginRight: theme.spacing(2)
   },
@@ -84,16 +83,7 @@ const useStyles = makeStyles(theme => ({
       display: "none"
     }
   },
-  button: {
-    borderBottom: "1px solid white",
-    marginRight: "20px",
-    display: "flex",
-    justifyContent: "center",
-    textAlign: "center",
-    "&:hover": {
-      border: "1px solid white"
-    }
-  },
+
   customButton: {
     "&:hover": {
       border: "1px solid white"
@@ -105,7 +95,8 @@ export const Header = () => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
+  const [open, setOpen] = React.useState(false);
+  const [open1, setOpen1] = React.useState(false);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -128,6 +119,7 @@ export const Header = () => {
 
   const renderMenu = (
     <Menu
+      className={classes.menu}
       anchorEl={anchorEl}
       anchorOrigin={{ vertical: "top", horizontal: "left" }}
       id={menuId}
@@ -136,10 +128,20 @@ export const Header = () => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Home</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Movies</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Directors</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Add new movie</MenuItem>
+      <div className="pageMenu">
+        <NavLink to="/" exact>
+          <MenuItem onClick={handleMenuClose}>Home</MenuItem>
+        </NavLink>
+        <NavLink to="/movies">
+          <MenuItem onClick={handleMenuClose}> Movies</MenuItem>
+        </NavLink>
+        <NavLink to="/directors">
+          <MenuItem onClick={handleMenuClose}>Directors</MenuItem>
+        </NavLink>
+        <NavLink to="/add">
+          <MenuItem onClick={handleMenuClose}>Add Movie</MenuItem>
+        </NavLink>
+      </div>
     </Menu>
   );
 
@@ -154,13 +156,23 @@ export const Header = () => {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
+      <MenuItem
+        onClick={() => {
+          setOpen1(true);
+          handleMobileMenuClose();
+        }}
+      >
         <IconButton color="inherit">
           <FontAwesomeIcon icon={faSignInAlt} />
         </IconButton>
         <p>SIGN IN</p>
       </MenuItem>
-      <MenuItem>
+      <MenuItem
+        onClick={() => {
+          setOpen(true);
+          handleMobileMenuClose();
+        }}
+      >
         <IconButton color="inherit">
           <FontAwesomeIcon icon={faUserPlus} />
         </IconButton>
@@ -171,14 +183,21 @@ export const Header = () => {
 
   return (
     <div className={classes.grow}>
-      <AppBar className={classes.AppBar} position="fixed">
+      <SlideDiaglog
+        open={open}
+        setOpen={setOpen}
+        open1={open1}
+        setOpen1={setOpen1}
+      />
+      <AppBar className={"AppBar"} position="fixed">
         <Toolbar>
-          <Button className={classes.button} onClick={handleProfileMenuOpen}>
-            <Typography className={classes.title} variant="h6">
-              PAGES
-            </Typography>
-          </Button>
-
+          <IconButton
+            className={classes.button}
+            onClick={handleProfileMenuOpen}
+            color="inherit"
+          >
+            PAGES
+          </IconButton>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -194,10 +213,22 @@ export const Header = () => {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton className={classes.customButton} color="inherit">
+            <IconButton
+              onClick={() => {
+                setOpen1(true);
+              }}
+              className={classes.customButton}
+              color="inherit"
+            >
               SIGN IN
             </IconButton>
-            <IconButton className={classes.customButton} color="inherit">
+            <IconButton
+              onClick={() => {
+                setOpen(true);
+              }}
+              className={classes.customButton}
+              color="inherit"
+            >
               SIGN UP
             </IconButton>
           </div>

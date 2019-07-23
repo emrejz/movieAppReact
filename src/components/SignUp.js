@@ -15,7 +15,7 @@ import { signUpFunc } from "../actions/authActions";
 const useStyles = makeStyles(theme => ({
   "@global": {
     body: {
-      backgroundColor: theme.palette.common.white
+      backgroundColor: "#0E0D0A"
     }
   },
   paper: {

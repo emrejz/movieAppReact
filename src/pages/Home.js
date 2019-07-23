@@ -7,8 +7,9 @@ import Container from "@material-ui/core/Container";
 import SlideDiaglog from "../components/SlideDiaglog";
 const useStyles = makeStyles(theme => ({
   heroContent: {
-    backgroundColor: "#F3F6F8",
-    padding: theme.spacing(22, 0, 6)
+    backgroundColor: "#030303",
+    padding: theme.spacing(22, 0, 6),
+    color: "white"
   },
   heroButtons: {
     marginTop: theme.spacing(4)
@@ -24,15 +25,22 @@ const Home = () => {
     <div className={classes.heroContent}>
       <Container maxWidth="sm">
         <Typography
+          className="h1Font"
           component="h1"
           variant="h2"
           align="center"
-          color="textPrimary"
+          color="white"
           gutterBottom
         >
           Welcome to the movie app.
         </Typography>
-        <Typography variant="h5" align="center" color="textSecondary" paragraph>
+        <Typography
+          className="h5Font"
+          variant="h5"
+          align="center"
+          color="inherit"
+          paragraph
+        >
           You need to login a member to view content
         </Typography>
         <div className={classes.heroButtons}>
@@ -48,9 +56,10 @@ const Home = () => {
             </Grid>
             <Grid item>
               <Button
+                className={"customBtn"}
                 onClick={() => setOpen(true)}
                 variant="outlined"
-                color="primary"
+                color="inherit"
               >
                 SIGN UP
               </Button>

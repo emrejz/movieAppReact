@@ -17,7 +17,7 @@ import { signInFunc } from "../actions/authActions";
 const useStyles = makeStyles(theme => ({
   "@global": {
     body: {
-      backgroundColor: theme.palette.common.white
+      backgroundColor: "#0E0D0A !important"
     }
   },
   paper: {
@@ -25,6 +25,7 @@ const useStyles = makeStyles(theme => ({
     marginBottom: theme.spacing(3),
     display: "flex",
     flexDirection: "column",
+
     alignItems: "center"
   },
   avatar: {
@@ -37,6 +38,13 @@ const useStyles = makeStyles(theme => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2)
+  },
+  container: {
+    backgroundColor: "#4E4B4B !important",
+    color: "white"
+  },
+  inputClass: {
+    color: "white !important"
   }
 }));
 
@@ -58,7 +66,7 @@ const SignIn = ({ setOpen, setOpen1 }) => {
     });
   };
   return (
-    <Container component="main" maxWidth="xs">
+    <Container className={classes.container} component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -80,6 +88,7 @@ const SignIn = ({ setOpen, setOpen1 }) => {
           noValidate
         >
           <TextField
+            style={{ color: "white !important" }}
             onChange={e => setUsername(e.target.value.trim())}
             value={getUsername}
             variant="outlined"

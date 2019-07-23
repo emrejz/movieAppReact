@@ -1,0 +1,72 @@
+.active {
+  color: darkgoldenrod !important;
+}
+
+.MuiMenu-paper a {
+  text-decoration: none !important;
+  color: #0e0d0a;
+}
+.MuiButtonBase-root {
+  font-size: calc(14px + 0.5vw) !important;
+  border-radius: 0% !important;
+  border: 0px !important;
+  box-sizing: border-box !important;
+  transition: all 1s ease !important;
+  justify-content: center !important;
+
+  backface-visibility: hidden !important;
+}
+.MuiButtonBase-root:hover {
+  background-color: inherit !important;
+  transform: scale(1.2) !important;
+  border-bottom: 1px solid white !important;
+  overflow: hidden !important;
+  transition: transform 0.5s !important;
+}
+.MuiToolbar-root {
+  min-height: 60px !important;
+}
+.pageMenu {
+  text-align: center;
+}
+.h1Font {
+  font-size: calc(40px + 2vw) !important;
+}
+.h5Font {
+  font-size: calc(16px + 1vw) !important;
+}
+.AppBar {
+  display: block !important;
+  z-index: 3 !important;
+  position: fixed !important;
+  top: 0 !important;
+  height: 60px !important;
+  width: 100% !important;
+  background: -webkit-linear-gradient(
+    -180deg,
+    #fbb01e,
+    #e50212,
+    #c0069c
+  ) !important;
+}
+
+.AppBar:before {
+  width: 100% !important;
+  height: 100% !important;
+  background: -webkit-linear-gradient(
+    0deg,
+    rgb(251, 176, 30),
+    rgb(229, 2, 18),
+    rgb(192, 6, 156)
+  ) !important;
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  opacity: 0 !important;
+  transition: all 1s ease !important;
+}
+
+.AppBar:hover:before {
+  opacity: 1 !important;
+}
