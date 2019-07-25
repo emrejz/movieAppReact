@@ -7,6 +7,9 @@ import MovieCard from "../components/MovieCard";
 import { useSelector } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
+  allPage: {
+    backgroundColor: "#030303"
+  },
   cardGrid: {
     paddingTop: theme.spacing(8),
     paddingBottom: theme.spacing(8)
@@ -33,38 +36,40 @@ const Movies = () => {
   const store = useSelector(state => state.movieReducer);
   console.log(store);
   return (
-    <Container className={classes.cardGrid} maxWidth="md">
-      <Typography className={classes.signInError} variant="h2">
-        Movies
-      </Typography>
+    <div className={classes.allPage}>
+      <Container className={classes.cardGrid} maxWidth="md">
+        <Typography className={classes.signInError} variant="h2">
+          Movies
+        </Typography>
 
-      {store.fetching && (
-        <Typography className={classes.signInError} variant="h4">
-          Loading...
-        </Typography>
-      )}
-      {store.fetched && store.moviesData instanceof Object && (
-        <Typography className={classes.signInError} variant="h4">
-          If you want to see movies you must sign in!
-        </Typography>
-      )}
-      {store.fetched && store.moviesData instanceof Array && (
-        <Grid container spacing={4}>
-          {store.fetched &&
-            store.moviesData.map(card => {
-              console.log(card);
-              return (
-                <MovieCard
-                  key={card._id}
-                  img={card.cover}
-                  title={card.title}
-                  director={card.director}
-                />
-              );
-            })}
-        </Grid>
-      )}
-    </Container>
+        {store.fetching && (
+          <Typography className={classes.signInError} variant="h4">
+            Loading...
+          </Typography>
+        )}
+        {store.fetched && store.moviesData instanceof Object && (
+          <Typography className={classes.signInError} variant="h4">
+            If you want to see movies you must sign in!
+          </Typography>
+        )}
+        {store.fetched && store.moviesData instanceof Array && (
+          <Grid container spacing={10}>
+            {store.fetched &&
+              store.moviesData.map(card => {
+                console.log(card);
+                return (
+                  <MovieCard
+                    key={card._id}
+                    img={card.cover}
+                    title={card.title}
+                    director={card.director}
+                  />
+                );
+              })}
+          </Grid>
+        )}
+      </Container>
+    </div>
   );
 };
 
