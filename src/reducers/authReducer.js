@@ -9,7 +9,7 @@ import {
 const initState = {
   fetching: false,
   fetched: false,
-  tokenData: { status: null, message: null, token: null },
+  tokenData: { status: null, message: null, token: null, username: null },
   errors: {}
 };
 export const authReducer = (state = initState, { type, payload }) => {
@@ -42,8 +42,9 @@ export const registerReducer = (state = initState, { type, payload }) => {
   switch (type) {
     case SIGN_UP_PENDING:
       return {
-        ...state,
-        fetching: true
+        ...initState,
+        fetching: true,
+        fetched: false
       };
     case SIGN_UP_FULFILLED:
       return {
@@ -56,6 +57,7 @@ export const registerReducer = (state = initState, { type, payload }) => {
       return {
         ...state,
         fetching: false,
+        fetched: false,
         errors: payload
       };
 

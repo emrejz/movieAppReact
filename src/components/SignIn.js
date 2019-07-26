@@ -52,13 +52,18 @@ const SignIn = ({ setOpen, setOpen1 }) => {
     e.preventDefault();
     if (!isValid())
       dispatch(signInFunc(getUsername, getPassword)).then(async res => {
-        if (res.value.status) {
-         await localStorage.setItem("token", res.value.token);
-          setOpen1(false);
-          setUsername("");
-          setPassword("");
-          dispatch(getMovies());
-          dispatch(getDirectors());
+        try {
+          if (res.value.status) {
+            await localStorage.setItem("token", res.value.token);
+            localStorage.setItem("username", getUsername);
+            setOpen1(false);
+            setUsername("");
+            setPassword("");
+            dispatch(getMovies());
+            dispatch(getDirectors());
+          }
+        } catch (error) {
+          throw new Error(error);
         }
       });
   };

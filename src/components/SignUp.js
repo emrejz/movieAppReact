@@ -52,9 +52,9 @@ const SignUp = ({ setOpen }) => {
     e.preventDefault();
     if (!isValid()) {
       dispatch(signUpFunc(getUsername, getPassword)).then(async res => {
-        console.log(res);
         if (res.value) {
           await localStorage.setItem("token", res.value);
+          localStorage.setItem("username", getUsername);
           setOpen(false);
           setUsername("");
           setPassword("");

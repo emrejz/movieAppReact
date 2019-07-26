@@ -18,7 +18,10 @@ export const signInFunc = (username, password) => {
       payload: Axios.post(process.env.REACT_APP_BASE_URL + "/authenticate", {
         username,
         password
-      }).then(res => res.data)
+      }).then(res => ({
+        ...res.data,
+        username
+      }))
     });
 };
 
@@ -29,16 +32,6 @@ export const signUpFunc = (username, password) => {
       payload: Axios.post(process.env.REACT_APP_BASE_URL + "/register", {
         username,
         password
-      }).then(res => res.data)
-    });
-};
-export const getSession = token => {
-  return dispatch =>
-    dispatch({
-      type: "SESSION",
-      payload: Axios.post(
-        process.env.REACT_APP_BASE_URL + "/authenticate/session",
-        token
-      ).then(res => res.data)
+      }).then(res => ({ data: res.data, username }))
     });
 };

@@ -136,7 +136,7 @@ export default function SignInSide() {
             Movie
           </Typography>
           <form
-            autocomplete="off"
+            autoComplete="off"
             onSubmit={e => handleSubmit(e)}
             className={classes.form}
             noValidate
@@ -256,7 +256,7 @@ export default function SignInSide() {
       </Grid>
       <Grid className={"item"} item xs={12} sm={6} md={6}>
         <img
-          alt="img"
+          alt=""
           style={{
             backgroundImage:
               "url(" + (picURL !== "" ? picURL : defaultImage) + ")"
