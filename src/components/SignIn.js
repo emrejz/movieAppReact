@@ -61,6 +61,8 @@ const SignIn = ({ setOpen, setOpen1 }) => {
             setPassword("");
             dispatch(getMovies());
             dispatch(getDirectors());
+          } else {
+            localStorage.clear();
           }
         } catch (error) {
           throw new Error(error);
