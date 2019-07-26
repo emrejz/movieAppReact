@@ -7,6 +7,10 @@ export const SIGN_UP_PENDING = "SIGN_UP_PENDING";
 export const SIGN_UP_FULFILLED = "SIGN_UP_FULFILLED";
 export const SIGN_UP_REJECTED = "SIGN_UP_REJECTED";
 
+export const SESSION_PENDING = "SESSION_PENDING";
+export const SESSION_FULFILLED = "SESSION_FULFILLED";
+export const SESSION_REJECTED = "SESSION_REJECTED";
+
 export const signInFunc = (username, password) => {
   return dispatch =>
     dispatch({
@@ -26,5 +30,15 @@ export const signUpFunc = (username, password) => {
         username,
         password
       }).then(res => res.data)
+    });
+};
+export const getSession = token => {
+  return dispatch =>
+    dispatch({
+      type: "SESSION",
+      payload: Axios.post(
+        process.env.REACT_APP_BASE_URL + "/authenticate/session",
+        token
+      ).then(res => res.data)
     });
 };

@@ -4,7 +4,7 @@ import "../stylesheets/Card.css";
 
 const MovieCard = ({ img, title, director }) => {
   return (
-    <Grid item xs={4}>
+    <Grid item xs={12} sm={6} md={4}>
       <div className="card">
         <div className="imgBx">
           <img src={img} alt="images" />

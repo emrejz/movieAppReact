@@ -1,16 +1,15 @@
 import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useSelector, useDispatch } from "react-redux";
 import { signUpFunc } from "../actions/authActions";
+import { getMovies } from "../actions/movieActions";
+import { getDirectors } from "../actions/directorActions";
 
 const useStyles = makeStyles(theme => ({
   "@global": {
@@ -52,12 +51,16 @@ const SignUp = ({ setOpen }) => {
   const handleSubmit = e => {
     e.preventDefault();
     if (!isValid()) {
-      dispatch(signUpFunc(getUsername, getPassword)).then(res => {
+      dispatch(signUpFunc(getUsername, getPassword)).then(async res => {
+        console.log(res);
         if (res.value) {
+          await localStorage.setItem("token", res.value);
           setOpen(false);
           setUsername("");
           setPassword("");
           setPasswordC("");
+          dispatch(getMovies());
+          dispatch(getDirectors());
         }
       });
     }

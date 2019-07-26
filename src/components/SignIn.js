@@ -1,18 +1,17 @@
 import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useSelector, useDispatch } from "react-redux";
 import { signInFunc } from "../actions/authActions";
+import { getMovies } from "../actions/movieActions";
+import { getDirectors } from "../actions/directorActions";
 
 const useStyles = makeStyles(theme => ({
   "@global": {
@@ -52,12 +51,14 @@ const SignIn = ({ setOpen, setOpen1 }) => {
   const handleSubmit = e => {
     e.preventDefault();
     if (!isValid())
-      dispatch(signInFunc(getUsername, getPassword)).then(res => {
+      dispatch(signInFunc(getUsername, getPassword)).then(async res => {
         if (res.value.status) {
-          localStorage.setItem("token", res.value.token);
+         await localStorage.setItem("token", res.value.token);
           setOpen1(false);
           setUsername("");
           setPassword("");
+          dispatch(getMovies());
+          dispatch(getDirectors());
         }
       });
   };

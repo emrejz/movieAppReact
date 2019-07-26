@@ -1,18 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import MovieCard from "../components/MovieCard";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getMovies } from "../actions/movieActions";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    height: "100vh",
+    backgroundColor: "black !important"
+  },
   allPage: {
     backgroundColor: "#030303"
   },
   cardGrid: {
     paddingTop: theme.spacing(8),
-    paddingBottom: theme.spacing(8)
+    paddingBottom: theme.spacing(8),
+    backgroundColor: "black"
   },
   card: {
     height: "100%",
@@ -34,43 +41,87 @@ const useStyles = makeStyles(theme => ({
 const Movies = () => {
   const classes = useStyles();
   const store = useSelector(state => state.movieReducer);
-  console.log(store);
-  return (
-    <div className={classes.allPage}>
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getMovies());
+  }, []);
+
+  if (store.fetching) {
+    return (
+      <Container
+        className={classes.cardGrid}
+        maxWidth="md"
+        style={{ textAlign: "center", marginTop: "100px" }}
+      >
+        <LoadingSpinner loading={store.fetching} />
+      </Container>
+    );
+  } else if (store.fetched) {
+    return (
+      <div className={classes.allPage}>
+        <Container className={classes.cardGrid} maxWidth="md">
+          {!store.moviesData.message && (
+            <Typography
+              className={"h1Font"}
+              style={{ color: "white" }}
+              variant="h2"
+            >
+              Movies
+            </Typography>
+          )}
+
+          {store.moviesData instanceof Array && (
+            <Grid container spacing={10}>
+              {store.fetched &&
+                store.moviesData.map(card => {
+                  return (
+                    <MovieCard
+                      key={card._id}
+                      img={card.cover}
+                      title={card.title}
+                      director={card.director}
+                    />
+                  );
+                })}
+            </Grid>
+          )}
+          {store.moviesData.message && (
+            <Grid container component="main" className={classes.root}>
+              <Container
+                maxWidth="md"
+                className={classes.cardGrid}
+                style={{ display: "flex", height: "100vh" }}
+              >
+                <Typography
+                  style={{ alignSelf: "center", margin: "auto" }}
+                  className={"h1Font"}
+                  variant="h2"
+                >
+                  SIGN IN/UP TO SEE THIS PAGE
+                </Typography>
+              </Container>
+            </Grid>
+          )}
+        </Container>
+      </div>
+    );
+  } else if (Object.keys(store.errors).length === 0) {
+    return (
       <Container className={classes.cardGrid} maxWidth="md">
         <Typography className={classes.signInError} variant="h2">
-          Movies
+          Pending...
         </Typography>
-
-        {store.fetching && (
-          <Typography className={classes.signInError} variant="h4">
-            Loading...
-          </Typography>
-        )}
-        {store.fetched && store.moviesData instanceof Object && (
-          <Typography className={classes.signInError} variant="h4">
-            If you want to see movies you must sign in!
-          </Typography>
-        )}
-        {store.fetched && store.moviesData instanceof Array && (
-          <Grid container spacing={10}>
-            {store.fetched &&
-              store.moviesData.map(card => {
-                console.log(card);
-                return (
-                  <MovieCard
-                    key={card._id}
-                    img={card.cover}
-                    title={card.title}
-                    director={card.director}
-                  />
-                );
-              })}
-          </Grid>
-        )}
       </Container>
-    </div>
-  );
+    );
+  } else {
+    return (
+      <Container className={classes.cardGrid} maxWidth="md">
+        <Typography className={classes.signInError} variant="h2">
+          ERROR...
+        </Typography>
+      </Container>
+    );
+  }
 };
 
 export default Movies;

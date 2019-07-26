@@ -1,3 +1,6 @@
+.App {
+  background-color: black;
+}
 .active {
   color: darkgoldenrod !important;
 }
@@ -32,10 +35,20 @@
   text-align: center;
 }
 .h1Font {
-  font-size: calc(40px + 2vw) !important;
+  font-size: calc(50px + 2vw) !important;
+  color: white !important;
+  text-align: center !important;
+}
+.h2Font {
+  font-size: calc(30px + 2vw) !important;
+  color: white !important;
+  text-align: center !important;
 }
 .h5Font {
   font-size: calc(16px + 1vw) !important;
+  color: white !important;
+
+  text-align: center !important;
 }
 .AppBar {
   display: block !important;

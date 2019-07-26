@@ -1,10 +1,8 @@
-import React, { useState, Fragment } from "react";
+import React from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
-import Button from "@material-ui/core/Button";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
 import InputBase from "@material-ui/core/InputBase";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
@@ -13,11 +11,7 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 import SlideDiaglog from "./SlideDiaglog";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink } from "react-router-dom";
-import {
-  faSignInAlt,
-  faSignOutAlt,
-  faUserPlus
-} from "@fortawesome/free-solid-svg-icons";
+import { faSignInAlt, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 const useStyles = makeStyles(theme => ({
   grow: {
     flexGrow: 1
@@ -99,7 +93,6 @@ export const Header = () => {
   const [open1, setOpen1] = React.useState(false);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
   function handleMobileMenuClose() {
     setMobileMoreAnchorEl(null);
   }
@@ -138,7 +131,7 @@ export const Header = () => {
         <NavLink to="/directors">
           <MenuItem onClick={handleMenuClose}>Directors</MenuItem>
         </NavLink>
-        <NavLink to="/add">
+        <NavLink to="/movie/add">
           <MenuItem onClick={handleMenuClose}>Add Movie</MenuItem>
         </NavLink>
       </div>
