@@ -41,6 +41,7 @@ const useStyles = makeStyles(theme => ({
 const Movies = () => {
   const classes = useStyles();
   const store = useSelector(state => state.movieReducer);
+  const session = useSelector(state => state.sessionReducer);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getMovies());
@@ -60,32 +61,31 @@ const Movies = () => {
     return (
       <div className={classes.allPage}>
         <Container className={classes.cardGrid} maxWidth="md">
-          {!store.moviesData.message && (
-            <Typography
-              className={"h1Font"}
-              style={{ color: "white" }}
-              variant="h2"
-            >
-              Movies
-            </Typography>
-          )}
-
           {store.moviesData instanceof Array && (
-            <Grid container spacing={10}>
-              {store.fetched &&
-                store.moviesData.map(card => {
-                  return (
-                    <MovieCard
-                      key={card._id}
-                      img={card.cover}
-                      title={card.title}
-                      director={card.director}
-                    />
-                  );
-                })}
-            </Grid>
+            <div>
+              <Typography
+                className={"h1Font"}
+                style={{ color: "white", margin: "20px 0px" }}
+                variant="h2"
+              >
+                Movies
+              </Typography>
+              <Grid container spacing={10}>
+                {store.fetched &&
+                  store.moviesData.map(card => {
+                    return (
+                      <MovieCard
+                        key={card._id}
+                        img={card.cover}
+                        title={card.title}
+                        director={card.director}
+                      />
+                    );
+                  })}
+              </Grid>
+            </div>
           )}
-          {store.moviesData.message && (
+          {store.moviesData.error && (
             <Grid container component="main" className={classes.root}>
               <Container
                 maxWidth="md"
@@ -97,21 +97,13 @@ const Movies = () => {
                   className={"h1Font"}
                   variant="h2"
                 >
-                  SIGN IN/UP TO SEE THIS PAGE
+                  SIGN IN/UP TO SEE MOVIES PAGE
                 </Typography>
               </Container>
             </Grid>
           )}
         </Container>
       </div>
-    );
-  } else if (Object.keys(store.errors).length === 0) {
-    return (
-      <Container className={classes.cardGrid} maxWidth="md">
-        <Typography className={classes.signInError} variant="h2">
-          Pending...
-        </Typography>
-      </Container>
     );
   } else {
     return (

@@ -18,47 +18,33 @@ export const movieReducer = (state = initState, { type, payload }) => {
     case GET_MOVIES_PENDING:
       return {
         ...initState,
-        fetched: false,
         fetching: true
       };
     case GET_MOVIES_FULFILLED:
       return {
-        ...state,
-        fetching: false,
+        ...initState,
         fetched: true,
-        moviesData: payload,
-        errors: {}
+        moviesData: payload
       };
     case GET_MOVIES_REJECTED:
       return {
-        ...state,
-        fetching: false,
-        fetched: false,
-        moviesData: {},
+        ...initState,
         errors: payload
       };
     case ADD_MOVIE_PENDING:
       return {
-        ...state,
-        fetching: true,
-        fetched: false,
-        addMovie: {},
-        errors: {}
+        ...initState,
+        fetching: true
       };
     case ADD_MOVIE_FULFILLED:
       return {
-        ...state,
-        fetching: false,
+        ...initState,
         fetched: true,
-        addMovie: payload,
-        errors: {}
+        addMovie: payload
       };
     case ADD_MOVIE_REJECTED:
       return {
-        ...state,
-        fetching: false,
-        fetched: false,
-        addMovie: {},
+        ...initState,
         errors: payload
       };
     default:

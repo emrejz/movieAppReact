@@ -6,7 +6,10 @@ import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import SlideDiaglog from "../components/SlideDiaglog";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getSession } from "../actions/authActions";
+import LoadingSpinner from "../components/LoadingSpinner";
+
 const useStyles = makeStyles(theme => ({
   heroContent: {
     backgroundColor: "#030303",
@@ -22,75 +25,78 @@ const Home = () => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [open1, setOpen1] = useState(false);
-  const session = useSelector(state => state.authReducer.tokenData.username);
-  const [username, setUsername] = useState(localStorage.getItem("username"));
+  const session = useSelector(state => state.sessionReducer);
+  const dispatch = useDispatch();
   useEffect(() => {
-    if (session !== null) {
-      console.log(session);
-      setUsername(session);
-    }
-  }, [session]);
+    dispatch(getSession());
+  }, []);
   return (
     <div className={classes.heroContent}>
       <Container maxWidth="sm">
-        <Typography
-          className="h1Font"
-          component="h1"
-          variant="h2"
-          align="center"
-          color="inherit"
-          gutterBottom
-        >
-          Welcome to the movie app
-        </Typography>
-        {username ? (
-          <div className="deconstructed">
-            {username}
-            <div> {username}</div>
-            <div> {username}</div>
-            <div> {username}</div>
-            <div> {username}</div>
-          </div>
+        {session.fetching ? (
+          <LoadingSpinner loading={session.fetching} />
         ) : (
           <div>
             <Typography
-              className="h5Font"
-              variant="h5"
+              className="h1Font"
+              component="h1"
+              variant="h2"
               align="center"
               color="inherit"
-              paragraph
+              gutterBottom
             >
-              You need to login a member to view content
+              Welcome to the movie app
             </Typography>
-            <div className={classes.heroButtons}>
-              <Grid container spacing={2} justify="center">
-                <Grid item>
-                  <Button
-                    onClick={() => setOpen1(true)}
-                    variant="contained"
-                    color="primary"
-                  >
-                    SIGN IN
-                  </Button>
-                </Grid>
-                <Grid item>
-                  <Button
-                    className={"customBtn"}
-                    onClick={() => setOpen(true)}
-                    variant="outlined"
-                    color="inherit"
-                  >
-                    SIGN UP
-                  </Button>
-                  <SlideDiaglog
-                    open={open}
-                    setOpen={setOpen}
-                    open1={open1}
-                    setOpen1={setOpen1}
-                  />
-                </Grid>
-              </Grid>
-            </div>
+            {session.fetched && session.session.username ? (
+              <div className="deconstructed">
+                {session.session.username}
+                <div> {session.session.username}</div>
+                <div> {session.session.username}</div>
+                <div> {session.session.username}</div>
+                <div> {session.session.username}</div>
+              </div>
+            ) : (
+              <div>
+                <Typography
+                  className="h5Font"
+                  variant="h5"
+                  align="center"
+                  color="inherit"
+                  paragraph
+                >
+                  You need to login a member to view content
+                </Typography>
+                <div className={classes.heroButtons}>
+                  <Grid container spacing={2} justify="center">
+                    <Grid item>
+                      <Button
+                        onClick={() => setOpen1(true)}
+                        variant="contained"
+                        color="primary"
+                      >
+                        SIGN IN
+                      </Button>
+                    </Grid>
+                    <Grid item>
+                      <Button
+                        className={"customBtn"}
+                        onClick={() => setOpen(true)}
+                        variant="outlined"
+                        color="inherit"
+                      >
+                        SIGN UP
+                      </Button>
+                      <SlideDiaglog
+                        open={open}
+                        setOpen={setOpen}
+                        open1={open1}
+                        setOpen1={setOpen1}
+                      />
+                    </Grid>
+                  </Grid>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </Container>

@@ -15,7 +15,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { getDirectors } from "../actions/directorActions";
 import { addMovie } from "../actions/movieActions";
 import LoadingSpinner from "../components/LoadingSpinner";
-const defaultImage = require("../img.png");
+import { Redirect } from "react-router-dom";
+const defaultImage = require("../enter.jpg");
 const useStyles = makeStyles(theme => ({
   root: {
     height: "100vh",
@@ -37,7 +38,7 @@ const useStyles = makeStyles(theme => ({
   },
   form: {
     width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(3)
+    marginTop: theme.spacing(2)
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -70,6 +71,7 @@ export default function SignInSide() {
   const [picURL, setPicURL] = useState("");
   const [picURLC, setPicURLC] = useState(true);
   const store = useSelector(state => state.directorReducer);
+  const movieStore = useSelector(state => state.movieReducer);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -94,7 +96,6 @@ export default function SignInSide() {
   };
   const handleSubmit = e => {
     e.preventDefault();
-
     if (isValid()) {
     } else {
       dispatch(
@@ -118,8 +119,11 @@ export default function SignInSide() {
     >
       <LoadingSpinner loading={store.fetching} />
     </Container>
-  ) : !store.directorData.message ? (
+  ) : !store.directorData.error ? (
     <Grid container component="main" className={classes.root}>
+      {movieStore.addMovie.data && movieStore.addMovie.data.title && (
+        <Redirect to="/movies" />
+      )}
       <CssBaseline />
       <Grid
         className={"customGrid"}
@@ -132,8 +136,12 @@ export default function SignInSide() {
         square
       >
         <div className={classes.paper}>
-          <Typography component="h1" variant="h5">
-            Movie
+          <Typography
+            className={"h5Font"}
+            style={{ color: "white", marginTop: "18px" }}
+            variant="h2"
+          >
+            Movie Form
           </Typography>
           <form
             autoComplete="off"
@@ -173,6 +181,7 @@ export default function SignInSide() {
               margin="normal"
               required
               fullWidth
+              type="number"
               id="year"
               label="Year"
               name="year"
@@ -277,7 +286,7 @@ export default function SignInSide() {
             className={"h1Font"}
             variant="h2"
           >
-            SIGN IN/UP TO SEE THIS PAGE
+            SIGN IN/UP TO SEE ADD/EDIT MOVIE PAGE
           </Typography>
         </Container>
       </Grid>

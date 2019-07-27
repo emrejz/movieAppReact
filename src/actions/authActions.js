@@ -18,18 +18,7 @@ export const signInFunc = (username, password) => {
       payload: Axios.post(process.env.REACT_APP_BASE_URL + "/authenticate", {
         username,
         password
-      }).then(res => {
-        if (res.data.message) {
-          return {
-            ...res.data
-          };
-        } else {
-          return {
-            ...res.data,
-            username
-          };
-        }
-      })
+      }).then(res => res.data)
     });
 };
 
@@ -40,6 +29,17 @@ export const signUpFunc = (username, password) => {
       payload: Axios.post(process.env.REACT_APP_BASE_URL + "/register", {
         username,
         password
-      }).then(res => ({ data: res.data, username }))
+      }).then(res => res.data)
+    });
+};
+export const getSession = x => {
+  const token = x || localStorage.getItem("token");
+  return dispatch =>
+    dispatch({
+      type: "SESSION",
+      payload: Axios.post(
+        process.env.REACT_APP_BASE_URL + "/authenticate/session",
+        { token }
+      ).then(res => res.data)
     });
 };

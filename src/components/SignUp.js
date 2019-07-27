@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useSelector, useDispatch } from "react-redux";
-import { signUpFunc } from "../actions/authActions";
+import { signUpFunc, getSession } from "../actions/authActions";
 import { getMovies } from "../actions/movieActions";
 import { getDirectors } from "../actions/directorActions";
 
@@ -52,15 +52,17 @@ const SignUp = ({ setOpen }) => {
     e.preventDefault();
     if (!isValid()) {
       dispatch(signUpFunc(getUsername, getPassword)).then(async res => {
-        if (res.value) {
+        localStorage.clear();
+        console.log(res);
+        if (!res.value.error) {
           await localStorage.setItem("token", res.value);
-          localStorage.setItem("username", getUsername);
           setOpen(false);
           setUsername("");
           setPassword("");
           setPasswordC("");
           dispatch(getMovies());
           dispatch(getDirectors());
+          dispatch(getSession(res.value));
         }
       });
     }
@@ -75,7 +77,10 @@ const SignUp = ({ setOpen }) => {
         <Typography component="h1" variant="h5">
           Sign Up
         </Typography>
-        {Object.keys(store.errors).length !== 0 ? (
+        {store.tokenData.error && (
+          <div style={{ color: "red" }}>{store.tokenData.error.message}</div>
+        )}
+        {store.tokenData.error && store.tokenData.error.errmsg ? (
           <Typography color="error" component="h1" variant="h6">
             Username already exists!
           </Typography>

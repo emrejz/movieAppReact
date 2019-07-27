@@ -9,7 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useSelector, useDispatch } from "react-redux";
-import { signInFunc } from "../actions/authActions";
+import { signInFunc, getSession } from "../actions/authActions";
 import { getMovies } from "../actions/movieActions";
 import { getDirectors } from "../actions/directorActions";
 
@@ -52,17 +52,17 @@ const SignIn = ({ setOpen, setOpen1 }) => {
     e.preventDefault();
     if (!isValid())
       dispatch(signInFunc(getUsername, getPassword)).then(async res => {
+        console.log(res);
         try {
+          localStorage.clear();
           if (res.value.status) {
             await localStorage.setItem("token", res.value.token);
-            localStorage.setItem("username", getUsername);
             setOpen1(false);
             setUsername("");
             setPassword("");
-            dispatch(getMovies());
+            dispatch(getMovies(res.value.token));
             dispatch(getDirectors());
-          } else {
-            localStorage.clear();
+            dispatch(getSession(res.value.token));
           }
         } catch (error) {
           throw new Error(error);
@@ -79,6 +79,9 @@ const SignIn = ({ setOpen, setOpen1 }) => {
         <Typography component="h1" variant="h5">
           Sign In
         </Typography>
+        {store.tokenData.error && (
+          <div style={{ color: "red" }}>{store.tokenData.error.message}</div>
+        )}
         {store.tokenData && !store.tokenData.status ? (
           <Typography color="error" component="h1" variant="h6">
             {store.tokenData.message}

@@ -7,9 +7,8 @@ export const GET_MOVIES_REJECTED = "GET_MOVIES_REJECTED";
 export const ADD_MOVIE_PENDING = "ADD_MOVIE_PENDING";
 export const ADD_MOVIE_FULFILLED = "ADD_MOVIE_FULFILLED";
 export const ADD_MOVIE_REJECTED = "ADD_MOVIE_REJECTED";
-
-export const getMovies = () => {
-  let config = {
+export const getMovies = token => {
+  var config = {
     headers: {
       "x-access-token": localStorage.getItem("token")
     }
@@ -25,12 +24,18 @@ export const getMovies = () => {
   };
 };
 export const addMovie = movie => {
+  var config = {
+    headers: {
+      "x-access-token": localStorage.getItem("token")
+    }
+  };
   return dispatch => {
     dispatch({
       type: "ADD_MOVIE",
       payload: Axios.post(
         process.env.REACT_APP_BASE_URL + "/api/movies",
-        movie
+        movie,
+        config
       ).then(res => res)
     });
   };

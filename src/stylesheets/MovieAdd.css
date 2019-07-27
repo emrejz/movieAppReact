@@ -4,8 +4,9 @@ img {
   background-size: contain !important;
   background-position: center !important;
   width: 95% !important;
-  height: 57% !important;
+  height: 53% !important;
   align-self: center !important;
+  background-color: white !important;
 }
 .item {
   border: none !important;
