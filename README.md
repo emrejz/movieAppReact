@@ -1,4 +1,4 @@
-![](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRCMlTW1qrLN9ETx4Vc5SBKOmqz63XJekOIoAWuSeSu2NAbAWC)
+![](https://images.assetsdelivery.com/compings_v2/redlinevector/redlinevector1903/redlinevector190300341.jpg)
 
 ### Project
 I used express, mongoose, JWT, bcryptjs for restful server.
@@ -9,11 +9,11 @@ And i used react, materialUI, redux, axios  for the front end.
 ### Run the app
 
 ```
-$ git clone "https://github.com/emrejz/movieAppReact.git" .
+$ git clone https://github.com/emrejz/movieAppReact.git .
 $ set your own environment variables
 $ npm i
 $ npm start
-$ and go to "http://localhost:3000/"
+$ and go to http://localhost:3000/
 ```
 
 
