@@ -34,7 +34,13 @@ const Home = () => {
     <div className={classes.heroContent}>
       <Container maxWidth="sm">
         {session.fetching ? (
-          <LoadingSpinner loading={session.fetching} />
+          <Container
+            className={classes.cardGrid}
+            maxWidth="md"
+            style={{ textAlign: "center", marginTop: "-10px" }}
+          >
+            <LoadingSpinner loading={session.fetching} />
+          </Container>
         ) : (
           <div>
             <Typography

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -10,8 +10,15 @@ import SearchIcon from "@material-ui/icons/Search";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import SlideDiaglog from "./SlideDiaglog";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { NavLink } from "react-router-dom";
-import { faSignInAlt, faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import { NavLink, withRouter } from "react-router-dom";
+import {
+  faSignInAlt,
+  faSignOutAlt,
+  faUserPlus
+} from "@fortawesome/free-solid-svg-icons";
+import { useDispatch, useSelector } from "react-redux";
+import { getSession } from "../actions/authActions";
+
 const useStyles = makeStyles(theme => ({
   grow: {
     flexGrow: 1
@@ -85,7 +92,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const Header = () => {
+const Header = props => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -93,6 +100,8 @@ export const Header = () => {
   const [open1, setOpen1] = React.useState(false);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const dispatch = useDispatch();
+  const session = useSelector(state => state);
   function handleMobileMenuClose() {
     setMobileMoreAnchorEl(null);
   }
@@ -149,28 +158,47 @@ export const Header = () => {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem
-        onClick={() => {
-          setOpen1(true);
-          handleMobileMenuClose();
-        }}
-      >
-        <IconButton color="inherit">
-          <FontAwesomeIcon icon={faSignInAlt} />
-        </IconButton>
-        <p>SIGN IN</p>
-      </MenuItem>
-      <MenuItem
-        onClick={() => {
-          setOpen(true);
-          handleMobileMenuClose();
-        }}
-      >
-        <IconButton color="inherit">
-          <FontAwesomeIcon icon={faUserPlus} />
-        </IconButton>
-        <p>SIGN UP </p>
-      </MenuItem>
+      {session.sessionReducer.session.error ? (
+        <Fragment>
+          <MenuItem
+            onClick={() => {
+              setOpen1(true);
+              handleMobileMenuClose();
+            }}
+          >
+            <IconButton color="inherit">
+              <FontAwesomeIcon icon={faSignInAlt} />
+            </IconButton>
+            <p>SIGN IN</p>
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              setOpen(true);
+              handleMobileMenuClose();
+            }}
+          >
+            <IconButton color="inherit">
+              <FontAwesomeIcon icon={faUserPlus} />
+            </IconButton>
+            <p>SIGN UP </p>
+          </MenuItem>
+        </Fragment>
+      ) : (
+        <MenuItem
+          onClick={() => {
+            localStorage.clear();
+            dispatch(getSession());
+            //   window.location.reload();
+            props.history.push("/");
+            handleMobileMenuClose();
+          }}
+        >
+          <IconButton color="inherit">
+            <FontAwesomeIcon icon={faSignOutAlt} />
+          </IconButton>
+          <p>SIGN OUT </p>
+        </MenuItem>
+      )}
     </Menu>
   );
 
@@ -206,24 +234,41 @@ export const Header = () => {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton
-              onClick={() => {
-                setOpen1(true);
-              }}
-              className={classes.customButton}
-              color="inherit"
-            >
-              SIGN IN
-            </IconButton>
-            <IconButton
-              onClick={() => {
-                setOpen(true);
-              }}
-              className={classes.customButton}
-              color="inherit"
-            >
-              SIGN UP
-            </IconButton>
+            {session.sessionReducer.session.error ? (
+              <Fragment>
+                <IconButton
+                  onClick={() => {
+                    setOpen1(true);
+                  }}
+                  className={classes.customButton}
+                  color="inherit"
+                >
+                  SIGN IN
+                </IconButton>
+                <IconButton
+                  onClick={() => {
+                    setOpen(true);
+                  }}
+                  className={classes.customButton}
+                  color="inherit"
+                >
+                  SIGN UP
+                </IconButton>
+              </Fragment>
+            ) : (
+              <IconButton
+                onClick={() => {
+                  localStorage.clear();
+                  dispatch(getSession());
+                  //   window.location.reload();
+                  props.history.push("/");
+                }}
+                className={classes.customButton}
+                color="inherit"
+              >
+                SIGN OUT
+              </IconButton>
+            )}
           </div>
           <div className={classes.sectionMobile}>
             <IconButton
@@ -244,3 +289,4 @@ export const Header = () => {
     </div>
   );
 };
+export default withRouter(Header);
