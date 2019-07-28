@@ -89,6 +89,7 @@
   color: black !important;
   height: 450px !important;
 }
+
 .signButton {
   width: 30px !important;
   background: #c0069c !important;
@@ -103,136 +104,121 @@
 * {
   box-sizing: border-box;
 }
-.btn1 {
-  --content: "SIGN IN!";
-  margin-left: 26%;
-  margin-top: 12px;
-}
-.btn2 {
-  --content: "SIGN UP!";
-  margin-left: 26%;
-  margin-top: 12px;
-}
-.btnDeneme {
-  margin-top: "20px";
-  position: relative;
-  padding: 10px 20px;
-  border: none;
-  background: none;
+
+.btn {
+  padding: 20px 30px;
+  font-size: calc(10px + 0.5vw);
   cursor: pointer;
-
-  font-family: "Source Code Pro";
-  font-weight: 900;
-  text-transform: uppercase;
-  font-size: 30px;
-  color: var(--text-color);
-
-  background-color: var(--btn-color);
-  box-shadow: var(--shadow-color) 2px 2px 22px;
-  border-radius: 4px;
-  z-index: 0;
-  overflow: hidden;
-}
-
-.btnDeneme:focus {
-  outline-color: transparent;
-  box-shadow: var(--btn-color) 2px 2px 22px;
-}
-
-.right::after,
-.btnDeneme::after {
-  content: var(--content);
-  display: block;
-  position: absolute;
+  position: relative;
+  border: 2px solid white;
+  outline: none;
+  color: white;
+  background-color: transparent;
+  margin: 10px;
+  font-family: "Merriweather", serif;
   white-space: nowrap;
-  padding: 40px 40px;
-  pointer-events: none;
 }
-
-.btnDeneme::after {
-  font-weight: 200;
-  top: -30px;
-  left: -20px;
-}
-
-.right,
-.left {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-}
-.right {
-  left: 66%;
-}
-.left {
-  right: 66%;
-}
-.right::after {
-  top: -30px;
-  left: calc(-66% - 20px);
-
-  background-color: var(--bg-color);
-  color: transparent;
-  transition: transform 0.4s ease-out;
-  transform: translate(0, -90%) rotate(0deg);
-}
-
-.btnDeneme:hover .right::after {
-  transform: translate(0, -47%) rotate(0deg);
-}
-
-.btnDeneme .right:hover::after {
-  transform: translate(0, -50%) rotate(-7deg);
-}
-
-.btnDeneme .left:hover ~ .right::after {
-  transform: translate(0, -50%) rotate(7deg);
-}
-
-/* bubbles */
-.btnDeneme::before {
+.btn--border::after,
+.btn--border::before,
+.btn--border span::after,
+.btn--border span::before {
   content: "";
-  pointer-events: none;
-  opacity: 0.6;
-  background: radial-gradient(
-      circle at 20% 35%,
-      transparent 0,
-      transparent 2px,
-      var(--text-color) 3px,
-      var(--text-color) 4px,
-      transparent 4px
-    ),
-    radial-gradient(
-      circle at 75% 44%,
-      transparent 0,
-      transparent 2px,
-      var(--text-color) 3px,
-      var(--text-color) 4px,
-      transparent 4px
-    ),
-    radial-gradient(
-      circle at 46% 52%,
-      transparent 0,
-      transparent 4px,
-      var(--text-color) 5px,
-      var(--text-color) 6px,
-      transparent 6px
-    );
-
+  position: absolute;
+  background-color: white;
+  transition: 0.5s ease;
+}
+.btn--border::after,
+.btn--border::before {
+  height: 100%;
+  width: 2px;
+  top: -2px;
+}
+.btn--border::after {
+  left: -2px;
+}
+.btn--border::before {
+  right: -2px;
+}
+.btn--border span::after,
+.btn--border span::before {
+  height: 2px;
   width: 100%;
-  height: 300%;
+  left: -2px;
+}
+.btn--border span::after {
+  top: -2px;
+}
+.btn--border span::before {
+  bottom: -2px;
+}
+.btn--border:hover:after {
+  transform: translatex(-12px);
+}
+.btn--border:hover:before {
+  transform: translatex(12px);
+}
+.btn--border:hover span::after {
+  transform: translatey(-12px);
+}
+.btn--border:hover span::before {
+  transform: translatey(12px);
+}
+.btn--swap span {
+  position: absolute;
   top: 0;
   left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 20px 30px;
+  font-size: calc(12px + 0.5vw);
+  box-sizing: border-box;
+  opacity: 0;
+  color: black;
+  transition: 0.35s ease;
+}
+.btn--swap::before {
+  content: "";
+  left: 0;
+  top: 0;
   position: absolute;
-  animation: bubbles 5s linear infinite both;
+  width: 0;
+  height: 100%;
+  background-color: white;
+  transition: 0.5s ease;
+}
+.btn--swap:hover:before {
+  width: 100%;
+}
+.btn--swap:hover span {
+  opacity: 1;
 }
 
-@keyframes bubbles {
-  from {
-    transform: translate();
-  }
-  to {
-    transform: translate(0, -66.666%);
-  }
+.btn--future::after,
+.btn--future::before {
+  content: "";
+  position: absolute;
+  border: 2px solid white;
+
+  width: calc(100% + 15px);
+  height: 60px;
+  transition: 0.5s ease;
+}
+.btn--future::after {
+  border: 2px solid white;
+
+  top: -15px;
+  left: -15px;
+  border-right: none;
+  border-bottom: none;
+}
+.btn--future::before {
+  bottom: -15px;
+  right: -15px;
+  border-left: none;
+  border-top: none;
+}
+.btn--future:hover:after,
+.btn--future:hover:before {
+  width: calc(100% - 30px);
+  height: 80px;
 }

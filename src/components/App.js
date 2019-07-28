@@ -15,6 +15,7 @@ const Root = () => {
           <Route path="/" exact component={Home} />
           <Route path="/movies" component={Movies} />
           <Route path="/movie/add" component={AddMovie} />
+          <Route component={Home} />
         </Switch>
       </Fragment>
     </BrowserRouter>

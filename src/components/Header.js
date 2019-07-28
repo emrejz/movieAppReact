@@ -137,9 +137,6 @@ const Header = props => {
         <NavLink to="/movies">
           <MenuItem onClick={handleMenuClose}> Movies</MenuItem>
         </NavLink>
-        <NavLink to="/directors">
-          <MenuItem onClick={handleMenuClose}>Directors</MenuItem>
-        </NavLink>
         <NavLink to="/movie/add">
           <MenuItem onClick={handleMenuClose}>Add Movie</MenuItem>
         </NavLink>

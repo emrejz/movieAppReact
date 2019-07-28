@@ -1,0 +1,17 @@
+.container1 {
+  background-color: #7768237c !important;
+  text-align: center !important;
+
+  color: white !important;
+  height: 520px !important;
+}
+
+.asd {
+  margin-top: 30px !important;
+  margin-bottom: 40px !important;
+}
+.signUpLink {
+  font-weight: 800 !important;
+  font-size: calc(14px + 0.5vw) !important;
+  color: white !important;
+}

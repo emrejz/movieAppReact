@@ -12,6 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { signInFunc, getSession } from "../actions/authActions";
 import { getMovies } from "../actions/movieActions";
 import { getDirectors } from "../actions/directorActions";
+import "../stylesheets/Sign.css";
 
 const useStyles = makeStyles(theme => ({
   "@global": {
@@ -29,7 +30,7 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: "black !important"
+    backgroundColor: "inherit"
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -52,7 +53,6 @@ const SignIn = ({ setOpen, setOpen1 }) => {
     e.preventDefault();
     if (!isValid())
       dispatch(signInFunc(getUsername, getPassword)).then(async res => {
-        console.log(res);
         try {
           localStorage.clear();
           if (res.value.status) {
@@ -70,7 +70,7 @@ const SignIn = ({ setOpen, setOpen1 }) => {
       });
   };
   return (
-    <Container className={"container"} component="main" maxWidth="xs">
+    <Container className={"container1"} component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -122,19 +122,16 @@ const SignIn = ({ setOpen, setOpen1 }) => {
             autoComplete="current-password"
           />
 
-          <button className="btn1 btnDeneme">
-            <div className="left" />
-            SIGN IN!
-            <div className="right" />
-          </button>
-          <Grid container style={{ marginTop: "30px" }}>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
+          <Grid container style={{ marginTop: "10px" }}>
+            <Grid item xs={12}>
+              <button className="asd btn btn--future">
+                SIGN IN!
+                <span />
+              </button>
             </Grid>
-            <Grid item>
+            <Grid item xs={12}>
               <Link
+                className={"signUpLink"}
                 href="#"
                 onClick={() => {
                   setOpen1(false);

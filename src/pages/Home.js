@@ -75,23 +75,21 @@ const Home = () => {
                 <div className={classes.heroButtons}>
                   <Grid container spacing={2} justify="center">
                     <Grid item>
-                      <Button
+                      <button
                         onClick={() => setOpen1(true)}
-                        variant="contained"
-                        color="primary"
+                        className="btn btn--border"
                       >
                         SIGN IN
-                      </Button>
+                        <span />
+                      </button>
                     </Grid>
                     <Grid item>
-                      <Button
-                        className={"customBtn"}
+                      <button
                         onClick={() => setOpen(true)}
-                        variant="outlined"
-                        color="inherit"
+                        className="btn btn--swap"
                       >
-                        SIGN UP
-                      </Button>
+                        SIGN UP<span>JOIN US</span>
+                      </button>
                       <SlideDiaglog
                         open={open}
                         setOpen={setOpen}

@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { signUpFunc, getSession } from "../actions/authActions";
 import { getMovies } from "../actions/movieActions";
 import { getDirectors } from "../actions/directorActions";
-
+import "../stylesheets/Sign.css";
 const useStyles = makeStyles(theme => ({
   "@global": {
     body: {
@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: "black"
+    backgroundColor: "inherit"
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -33,6 +33,9 @@ const useStyles = makeStyles(theme => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2)
+  },
+  usernameInp: {
+    color: "black !important"
   }
 }));
 
@@ -53,7 +56,6 @@ const SignUp = ({ setOpen }) => {
     if (!isValid()) {
       dispatch(signUpFunc(getUsername, getPassword)).then(async res => {
         localStorage.clear();
-        console.log(res);
         if (!res.value.error) {
           await localStorage.setItem("token", res.value);
           setOpen(false);
@@ -68,7 +70,7 @@ const SignUp = ({ setOpen }) => {
     }
   };
   return (
-    <Container className={"container"} component="main" maxWidth="xs">
+    <Container className={"container1"} component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -104,6 +106,7 @@ const SignUp = ({ setOpen }) => {
             name="username"
             autoComplete="username"
             autoFocus
+            // className={usernameInp}
           />
           <TextField
             onChange={e => setPassword(e.target.value.trim())}
@@ -112,6 +115,7 @@ const SignUp = ({ setOpen }) => {
             margin="normal"
             required
             fullWidth
+            error={getPassword !== getPasswordC ? true : false}
             name="password"
             label="Password"
             type="password"
@@ -124,6 +128,7 @@ const SignUp = ({ setOpen }) => {
             variant="outlined"
             margin="normal"
             required
+            error={getPassword !== getPasswordC ? true : false}
             fullWidth
             name="passwordC"
             label="Password"
@@ -131,11 +136,9 @@ const SignUp = ({ setOpen }) => {
             id="passwordC"
             autoComplete="current-password"
           />
-
-          <button className="btn2 btnDeneme">
-            <div className="left" />
+          <button className="asd btn btn--future">
             SIGN UP!
-            <div className="right" />
+            <span />
           </button>
         </form>
       </div>
