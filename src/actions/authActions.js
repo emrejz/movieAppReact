@@ -29,7 +29,7 @@ export const signUpFunc = (username, password) => {
       payload: Axios.post(process.env.REACT_APP_BASE_URL + "/register", {
         username,
         password
-      }).then(res => res.data)
+      }).then(res => res.data.token)
     });
 };
 export const getSession = x => {
